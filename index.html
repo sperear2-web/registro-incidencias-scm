@@ -9,7 +9,7 @@
 <body>
   <header>
     <h1>Sistema de registro de incidencias</h1>
-    <p class="version">Versión 1.0.0</p>
+    <p class="version">Versión 1.1.0</p>
   </header>
 
   <main>
@@ -32,6 +32,16 @@
 
     <section class="card">
       <h2>Incidencias registradas</h2>
+      <div class="filtros">
+        <label for="filtro-estado">Filtrar por estado</label>
+        <select id="filtro-estado">
+          <option value="Todas">Todas</option>
+          <option value="Abierta">Abierta</option>
+          <option value="En proceso">En proceso</option>
+          <option value="Resuelta">Resuelta</option>
+        </select>
+        <p id="contador" class="meta"></p>
+      </div>
       <p id="vacio">Aún no hay incidencias registradas.</p>
       <ul id="lista"></ul>
     </section>

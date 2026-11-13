@@ -8,6 +8,7 @@ Proyecto de la práctica grupal **Gestión de versiones y automatización del de
 
 - Registrar una incidencia (título, descripción y quién la reporta).
 - Listar las incidencias registradas con su estado.
+- Filtrar incidencias por estado y cambiar el estado de cada una *(desde v1.1.0)*.
 
 ## Ejecutar la aplicación localmente
 
@@ -51,6 +52,7 @@ npm test
 | Versión | Descripción |
 |---------|-------------|
 | v1.0.0  | Versión inicial: registro y listado de incidencias. |
+| v1.1.0  | Filtro de incidencias por estado y cambio de estado. |
 
 ## Despliegue automático
 
