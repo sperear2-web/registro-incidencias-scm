@@ -2,12 +2,15 @@
   'use strict';
 
   var CLAVE = 'incidencias';
+  var Inc = window.Incidencias;
   var incidencias = cargar();
 
   var form = document.getElementById('form-incidencia');
   var lista = document.getElementById('lista');
   var vacio = document.getElementById('vacio');
   var mensaje = document.getElementById('mensaje');
+  var filtro = document.getElementById('filtro-estado');
+  var contador = document.getElementById('contador');
 
   function cargar() {
     try {
@@ -46,24 +49,46 @@
     meta.textContent = 'Reportado por ' + inc.reportadoPor + ' · ' +
       new Date(inc.fecha).toLocaleString('es-EC');
 
+    var selector = document.createElement('select');
+    selector.className = 'cambiar-estado';
+    selector.setAttribute('aria-label', 'Cambiar estado de ' + inc.titulo);
+    Inc.ESTADOS.forEach(function (e) {
+      var opcion = document.createElement('option');
+      opcion.value = e;
+      opcion.textContent = e;
+      opcion.selected = e === inc.estado;
+      selector.appendChild(opcion);
+    });
+    selector.addEventListener('change', function () {
+      incidencias = Inc.cambiarEstado(incidencias, inc.id, selector.value);
+      guardar();
+      renderizar();
+    });
+
     li.appendChild(h3);
     li.appendChild(estado);
     li.appendChild(desc);
     li.appendChild(meta);
+    li.appendChild(selector);
     return li;
   }
 
   function renderizar() {
+    var visibles = Inc.filtrarPorEstado(incidencias, filtro.value);
     lista.innerHTML = '';
-    incidencias.forEach(function (inc) {
+    visibles.forEach(function (inc) {
       lista.appendChild(pintarIncidencia(inc));
     });
-    vacio.hidden = incidencias.length > 0;
+    vacio.hidden = visibles.length > 0;
+    vacio.textContent = incidencias.length === 0
+      ? 'Aún no hay incidencias registradas.'
+      : 'No hay incidencias con el estado seleccionado.';
+    contador.textContent = visibles.length + ' de ' + incidencias.length + ' incidencias';
   }
 
   form.addEventListener('submit', function (evento) {
     evento.preventDefault();
-    var inc = window.Incidencias.crearIncidencia({
+    var inc = Inc.crearIncidencia({
       titulo: document.getElementById('titulo').value,
       descripcion: document.getElementById('descripcion').value,
       reportadoPor: document.getElementById('reportado-por').value
@@ -74,6 +99,8 @@
     form.reset();
     mostrarMensaje('Incidencia registrada correctamente.', 'ok');
   });
+
+  filtro.addEventListener('change', renderizar);
 
   renderizar();
 }());
