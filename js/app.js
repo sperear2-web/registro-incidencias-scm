@@ -88,11 +88,17 @@
 
   form.addEventListener('submit', function (evento) {
     evento.preventDefault();
-    var inc = Inc.crearIncidencia({
+    var datos = {
       titulo: document.getElementById('titulo').value,
       descripcion: document.getElementById('descripcion').value,
       reportadoPor: document.getElementById('reportado-por').value
-    });
+    };
+    var validacion = Inc.validarIncidencia(datos);
+    if (!validacion.valido) {
+      mostrarMensaje(validacion.errores.join(' '), 'error');
+      return;
+    }
+    var inc = Inc.crearIncidencia(datos);
     incidencias.unshift(inc);
     guardar();
     renderizar();
