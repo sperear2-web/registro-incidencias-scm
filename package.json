@@ -1,0 +1,9 @@
+{
+  "name": "registro-incidencias",
+  "description": "Aplicación web sencilla para registrar incidencias (práctica de Gestión de la Configuración del Software)",
+  "scripts": {
+    "test": "node --test tests/incidencias.test.js"
+  },
+  "license": "MIT",
+  "private": true
+}
