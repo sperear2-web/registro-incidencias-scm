@@ -34,6 +34,23 @@ const muestra = () => [
 
 test('filtrarPorEstado devuelve solo las incidencias del estado pedido', () => {
   const abiertas = Incidencias.filtrarPorEstado(muestra(), 'Abierta');
+
+test('validarIncidencia rechaza campos vacíos o con solo espacios (fix v1.1.1)', () => {
+  const r = Incidencias.validarIncidencia({ titulo: '   ', descripcion: 'ok', reportadoPor: '' });
+  assert.strictEqual(r.valido, false);
+  assert.strictEqual(r.errores.length, 2);
+});
+
+test('validarIncidencia acepta datos completos', () => {
+  const r = Incidencias.validarIncidencia({ titulo: 'a', descripcion: 'b', reportadoPor: 'c' });
+  assert.strictEqual(r.valido, true);
+});
+
+test('crearIncidencia lanza error con título de solo espacios y recorta valores', () => {
+  assert.throws(() => Incidencias.crearIncidencia({ titulo: '   ', descripcion: 'x', reportadoPor: 'y' }));
+  const inc = Incidencias.crearIncidencia({ titulo: ' Falla ', descripcion: ' x ', reportadoPor: ' y ' });
+  assert.strictEqual(inc.titulo, 'Falla');
+});
   assert.deepStrictEqual(abiertas.map((i) => i.id), ['1', '4']);
   assert.strictEqual(Incidencias.filtrarPorEstado(muestra(), 'En proceso').length, 1);
 });
