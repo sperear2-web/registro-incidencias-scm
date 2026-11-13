@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registro de Incidencias</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Sistema de registro de incidencias</h1>
+    <p class="version">Versión 1.0.0</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Registrar incidencia</h2>
+      <form id="form-incidencia">
+        <label for="titulo">Título</label>
+        <input type="text" id="titulo" required maxlength="80">
+
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" rows="3" required></textarea>
+
+        <label for="reportado-por">Reportado por</label>
+        <input type="text" id="reportado-por" required maxlength="60">
+
+        <button type="submit">Registrar</button>
+      </form>
+      <p id="mensaje" role="alert"></p>
+    </section>
+
+    <section class="card">
+      <h2>Incidencias registradas</h2>
+      <p id="vacio">Aún no hay incidencias registradas.</p>
+      <ul id="lista"></ul>
+    </section>
+  </main>
+
+  <script src="js/incidencias.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
